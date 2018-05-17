@@ -9,7 +9,7 @@ var socket = dgram.createSocket("udp4"); // Définition du socket UDP
 
 var UDP_PORT = 2323;
 
-var MULTICAST_GROUP_ADRESSE =  "224.0.0.1";
+var MULTICAST_GROUP_ADRESSE =  "239.255.22.5";
 
 // Déclaration des sons
  var SOUNDS = {
@@ -26,7 +26,7 @@ var instrument = process.argv[2];
 // définit le payload à envoyer à l'auditeur
 var message = {
     uuid: uuidv4(), // identifiant du musicien
-    instrument: instrument, // recupérer son instrument 
+    //instrument: instrument, // recupérer son instrument 
     sound: SOUNDS[instrument] // récupérer le son correspondant à l'instrument 
 }
 
@@ -35,6 +35,7 @@ var payload = JSON.stringify(message); // parser le payload en Json
 // pour envoyer le payload 
 function sendPayload(){
 	socket.send(payload,UDP_PORT,MULTICAST_GROUP_ADRESSE); 
+	console.log("Data has send: " + payload );
 
 }
 
