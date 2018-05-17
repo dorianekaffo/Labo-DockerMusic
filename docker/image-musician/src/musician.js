@@ -34,7 +34,7 @@ var payload = JSON.stringify(message); // parser le payload en Json
 
 // pour envoyer le payload 
 function sendPayload(){
-	socket.send(payload,UDP_PORT,MULTICAST_GROUP_ADRESSE); 
+	socket.send(payload, 0, payload.length, UDP_PORT,MULTICAST_GROUP_ADRESSE); 
 	console.log("Data has send: " + payload );
 
 }
