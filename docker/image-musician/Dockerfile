@@ -7,6 +7,6 @@ MAINTAINER Doriane Kaffo <doriane.tedongmokaffo@heig-vd.ch>
 COPY src /opt/musician/
 
 WORKDIR /opt/musician/
-RUN npm install
+RUN npm install 
 
 ENTRYPOINT ["node", "/opt/musician/musician.js"]

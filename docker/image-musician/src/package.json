@@ -2,9 +2,8 @@
   "name": "src",
   "version": "1.0.0",
   "description": "",
-  "main": "auditor.js",
+  "main": "musician.js",
   "dependencies": {
-    "hashmap": "^2.3.0",
     "uuid": "^3.2.1"
   },
   "devDependencies": {},
