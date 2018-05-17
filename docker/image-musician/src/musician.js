@@ -7,7 +7,7 @@ const uuidv4 = require('uuid/v4'); // module pour identifier les musiciens
 
 var socket = dgram.createSocket("udp4"); // Définition du socket UDP
 
-var UDP_PORT = 2323;
+var UDP_PORT = 12345;
 
 var MULTICAST_GROUP_ADRESSE =  "239.255.22.5";
 

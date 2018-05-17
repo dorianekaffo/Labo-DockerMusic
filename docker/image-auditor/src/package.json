@@ -4,7 +4,8 @@
   "description": "",
   "main": "auditor.js",
   "dependencies": {
-    "hashmap": "^2.3.0"
+    "hashmap": "^2.3.0",
+    "uuid": "^3.2.1"
   },
   "devDependencies": {},
   "scripts": {
