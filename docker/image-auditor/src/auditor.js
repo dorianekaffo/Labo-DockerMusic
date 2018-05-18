@@ -1,17 +1,8 @@
 /*
- This program simulates a "data collection station", which joins a multicast
- group in order to receive measures published by thermometers (or other sensors).
- The measures are transported in json payloads with the following format:
-   {"timestamp":1394656712850,"location":"kitchen","temperature":22.5}
- Usage: to start the station, use the following command in a terminal
-   node station.js
+ This program simulates a "auditor", which joins a multicast
+ group in order to receive measures published by musician.
 */
 
-/*
- * We have defined the multicast address and port in a file, that can be imported both by
- * thermometer.js and station.js. The address and the port are part of our simple 
- * application-level protocol
- */
 var net = require('net');
 
 var HashMap = require('hashmap');
@@ -50,7 +41,7 @@ s.on('message', function(msg, source) {
         instruments.delete(msgInbound.uui);
     }
 
-    // chercher l'instrument correspondant au son réçu dans le paylaod UDP 
+    // find the instrument corresponding to the sound received in the paylaod UDP 
     var tmpInstrument;
     instrumentSound.forEach(element => {
         if (msgInbound.sound == element.sound)
@@ -59,9 +50,11 @@ s.on('message', function(msg, source) {
 
 
 
-    //Creation d'un objet dinamique selon le protocole TCP pour le payload	suivant 
-    //le format ci-dessous:
-    // {"uuid": valeur_a_changer, "instrument":, "activeSince": date_changer}
+    / **
+    * Creation of a dynamic object according to the TCP protocol for the following payload
+    * the format below:
+    * {"uuid": value_to_change, "instrument" :, "activeSince": date_change}
+    * /
 
     var payloadElementTCP = {
         uuid: msgInbound.uuid,
@@ -79,7 +72,7 @@ var InstrumentObject = function(InstrumentName, InstrumentSound) {
         this.instrument = InstrumentName,
             this.sound = InstrumentSound
     }
-    // tableau de correspondance entre l'instrument et son son
+    // correspondence table between the instrument and its sound
 var instrumentSound = [new InstrumentObject("piano", "ti-ta-ti"),
     new InstrumentObject("trumpet", "pouet"),
     new InstrumentObject("flute", "trulu"),
@@ -87,13 +80,15 @@ var instrumentSound = [new InstrumentObject("piano", "ti-ta-ti"),
     new InstrumentObject("drum", "boum-boum")
 ];
 
-// let's create a TCP server and send the data
-// source: https://gist.github.com/tedmiston/5935757
+/*
+* let's create a TCP server and send the data
+* source: https://gist.github.com/tedmiston/5935757
+*/
 
 var server = net.createServer(function(socket) {
 
 
-    //Enlever les musiciens inactifs 
+    //Remove inactive musicians
     instruments.forEach((value, key) => {
         if (Date.now() - Date.parse(value.activeSince) > 5000)
             instruments.delete(key);
@@ -102,7 +97,7 @@ var server = net.createServer(function(socket) {
     console.log("CONNECTED: " + socket.remoteAddress + ' : ' + socket.remotePort);
 
     var payloadTCP = JSON.stringify(instruments.values()) + "\r\n";
-    // envoyer un tableau JSON.stringify("tableau")
+    // send an array JSON.stringify ("array")
     socket.write(payloadTCP);
 
     socket.destroy();

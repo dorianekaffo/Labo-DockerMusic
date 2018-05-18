@@ -1,17 +1,20 @@
-// modules
+/*
+* This program simulates a muscian who plays an instrument, which publishes the sound of this instrument
+*  on a multicast group.
+*/
 
-var dgram = require("dgram"); // module Pour définir le socket UDP
+var dgram = require("dgram"); // module To set the UDP socket
 
-const uuidv4 = require('uuid/v4'); // module pour identifier les musiciens
+const uuidv4 = require('uuid/v4'); // module to identify the musicians
 
 
-var socket = dgram.createSocket("udp4"); // Définition du socket UDP
+var socket = dgram.createSocket("udp4"); // UDP socket definition
 
 var UDP_PORT = 12345;
 
 var MULTICAST_GROUP_ADRESSE =  "239.255.22.5";
 
-// Déclaration des sons
+// Declaration of sounds
  var SOUNDS = {
     piano: "ti-ta-ti",
     trumpet: "pouet",
@@ -20,26 +23,25 @@ var MULTICAST_GROUP_ADRESSE =  "239.255.22.5";
     drum: "boum-boum"
 }
 
-// pour récuper l'instrument passé en paramètre lorsqu'on lance un musicien
+// to retrieve the instrument passed as parameter when casting a musician
 var instrument = process.argv[2]; 
 
-// définit le payload à envoyer à l'auditeur
+// sets the payload to send to the listener
 var message = {
-    uuid: uuidv4(), // identifiant du musicien
-    //instrument: instrument, // recupérer son instrument 
-    sound: SOUNDS[instrument] // récupérer le son correspondant à l'instrument 
+    uuid: uuidv4(), // musician's ID
+    sound: SOUNDS[instrument] // recover the sound corresponding to the instrument 
 }
 
-var payload = JSON.stringify(message); // parser le payload en Json
+var payload = JSON.stringify(message); // parser the payload in Json
 
-// pour envoyer le payload 
+// to send the payload 
 function sendPayload(){
 	socket.send(payload, 0, payload.length, UDP_PORT,MULTICAST_GROUP_ADRESSE); 
 	console.log("Data has send: " + payload );
 
 }
 
-// Frequence d'envoie du payload
+// Payload sending frequency
 setInterval(sendPayload,1000);
 
 
