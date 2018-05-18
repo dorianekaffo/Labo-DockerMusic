@@ -5,7 +5,7 @@
 
 var dgram = require("dgram"); // module To set the UDP socket
 
-const uuidv4 = require('uuid/v4'); // module to identify the musicians
+const uuidv4 = require('uuid'); // module to identify the musicians
 
 
 var socket = dgram.createSocket("udp4"); // UDP socket definition
@@ -28,7 +28,7 @@ var instrument = process.argv[2];
 
 // sets the payload to send to the listener
 var message = {
-    uuid: uuidv4(), // musician's ID
+    uuid: uuid(), // musician's ID
     sound: SOUNDS[instrument] // recover the sound corresponding to the instrument 
 }
 

@@ -7,6 +7,8 @@ MAINTAINER Doriane Kaffo <doriane.tedongmokaffo@heig-vd.ch>
 COPY src /opt/auditor/
 
 WORKDIR /opt/auditor/
-RUN npm install
+RUN npm install 
+RUN npm install hashmap -—save
+
 
 ENTRYPOINT ["node", "/opt/auditor/auditor.js"]
